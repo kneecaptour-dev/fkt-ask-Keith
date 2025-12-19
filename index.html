@@ -25,8 +25,8 @@
   </div>
 
   <script>
-    const key = 'AIzaSyYourRealKeyHere'; // <-- paste your real key
-    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=easy+recipes&type=video&maxResults=10&key=${key}`;
+    const key = 'YOUR_API_KEY_HERE';          // <-- replace with real key
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=easy recipes&type=video&maxResults=10&key=${key}`;
 
     fetch(url)
       .then(r => r.json())
@@ -45,8 +45,7 @@
             </div>
           `);
         });
-      })
-      .catch(err => console.error(err));
+      });
 
     function play(id){
       document.getElementById('player').src = `https://www.youtube.com/embed/${id}?autoplay=1`;
