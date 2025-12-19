@@ -1,43 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="utf-8">
   <title>My YouTube Clone</title>
   <style>
     body{font-family:Arial;background:#111;color:#fff;text-align:center}
     .grid{display:flex;flex-wrap:wrap;justify-content:center;gap:15px;margin-top:20px}
-    .card{width:200px;cursor;border:2px solid #fff;border-radius:8px;overflow:hidden}
+    .card{width:200px;cursor:pointer;border:2px solid #fff;border-radius:8px;overflow:hidden}
     .card img{width:100%;height:120px;object-fit:cover}
     .card p{font-size:14px;padding:6px}
     .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center}
     .overlay iframe{width:90%;max-width:800px;height:450px}
     .close{position:absolute;top:20px;right:30px;font-size:30px;color:#fff;cursor:pointer}
     a.buy{display:inline-block;margin-top:8px;background:#ff0066;color:#fff;padding:6px 12px;text-decoration:none;border-radius:4px;font-size:12px}
-@media (max-width: 900px) { 
-img { 
-   max-width: 100%;
-   height: auto;
-}
-
-.table-container {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-td, th {
-    padding: 8px;
-    text-align: left;
-    border: 1px solid #ddd;
-}
-}	
-
-
   </style>
 </head>
 <body>
@@ -50,8 +25,8 @@ td, th {
   </div>
 
   <script>
-    const key = 'YOUR_API_KEY_HERE';          // <-- replace with real key
-    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=easy recipes&type=video&maxResults=10&key=${key}`;
+    const key = 'AIzaSyYourRealKeyHere'; // <-- paste your real key
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=easy+recipes&type=video&maxResults=10&key=${key}`;
 
     fetch(url)
       .then(r => r.json())
@@ -70,7 +45,8 @@ td, th {
             </div>
           `);
         });
-      });
+      })
+      .catch(err => console.error(err));
 
     function play(id){
       document.getElementById('player').src = `https://www.youtube.com/embed/${id}?autoplay=1`;
@@ -81,7 +57,5 @@ td, th {
       document.getElementById('overlay').style.display = 'none';
     }
   </script>
-<p style="bottom: 10px; right: 10px; position: absolute;"><a href="https://wordtohtml.net/?utm_source=wth_free_doc_conversion_link&utm_medium=external" target="_blank" style="font-size:11px; color: #d0d0d0">Converted to HTML with WordToHTML.net</a></p>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"4581d6a58cf94e929fad52deda295622","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
