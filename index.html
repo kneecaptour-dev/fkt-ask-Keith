@@ -1,59 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Gadget Reviews Hub</title>
-  <style>
-    body{font-family:Arial;background:#111;color:#fff;text-align:center;margin:0}
-    .grid{display:flex;flex-wrap:wrap;justify-content:center;gap:15px;margin-top:20px}
-    .card{width:240px;cursor:pointer;border:2px solid #fff;border-radius:8px;overflow:hidden;transition:transform .2s}
-    .card:hover{transform:scale(1.03)}
-    .card img{width:100%;height:135px;object-fit:cover}
-    .card p{font-size:14px;padding:6px}
-    .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center}
-    .overlay iframe{width:90%;max-width:800px;height:450px}
-    .close{position:absolute;top:20px;right:30px;font-size:30px;color:#fff;cursor:pointer}
-    a.buy{display:inline-block;margin-top:8px;background:#ff6600;color:#fff;padding:6px 12px;text-decoration:none;border-radius:4px;font-size:12px}
-  </style>
-</head>
-<body>
-  <h2>Gadget Reviews Hub</h2>
-  <div class="grid" id="grid">Loading…</div>
-  <div class="overlay" id="overlay"><span class="close">&times;</span><iframe id="player" frameborder="0" allowfullscreen></iframe></div>
+<script>
+  const key = 'AIzaSyCzUozYqlU_k_QP5JQ0Qv09Fy1036PHF6Q';
+  const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=gadget+reviews&type=video&maxResults=10&key=${key}`;
 
-  <script>
-    const key = 'AIzaSyCzUozYqlU_k_QP5JQ0Qv09Fy1036PHF6Q';
-    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=gadget+reviews&type=video&maxResults=10&key=${key}`;
+  fetch(url)
+    .then(r => r.json())
+    .then(data => {
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '';
+      data.items.forEach(item => {
+        const vid = item.id.videoId;
+        const title = item.snippet.title;
+        const thumb = item.snippet.thumbnails.medium.url;
+        grid.insertAdjacentHTML('beforeend', `
+          <div class="card" onclick="play('${vid}')">
+            <img src="${thumb}" alt="thumb">
+            <p>${title}</p>
+            <a class="buy" href="https://www.amazon.com/s?k=gadgets&tag=yourassocid-20" target="_blank">See Amazon Deals</a>
+          </div>
+        `);
+      });
+    })
+    .catch(err => console.error(err));
 
-    fetch(url)
-      .then(r => r.json())
-      .then(data => {
-        const grid = document.getElementById('grid');
-        grid.innerHTML = '';
-        data.items.forEach(item => {
-          const vid = item.id.videoId;
-          const title = item.snippet.title;
-          const thumb = item.snippet.thumbnails.medium.url;
-          grid.insertAdjacentHTML('beforeend', `
-            <div class="card" onclick="play('${vid}')">
-              <img src="${thumb}" alt="thumb">
-              <p>${title}</p>
-              <a class="buy" href="https://www.amazon.com/s?k=gadgets&tag=yourassocid-20" target="_blank">See Amazon Deals</a>
-            </div>
-          `);
-        });
-      })
-      .catch(err => console.error(err));
-
-    function play(id){
-      document.getElementById('player').src = `https://www.youtube.com/embed/${id}?autoplay=1`;
-      document.getElementById('overlay').style.display = 'flex';
-    }
-    document.querySelector('.close').onclick = () => {
-      document.getElementById('player').src = '';
-      document.getElementById('overlay').style.display = 'none';
-    };
-  </script>
-</body>
-</html>
+  function play(id){
+    document.getElementById('player').src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+    document.getElementById('overlay').style.display = 'flex';
+  }
+  document.querySelector('.close').onclick = () => {
+    document.getElementById('player').src = '';
+    document.getElementById('overlay').style.display = 'none';
+  };
+</script>
